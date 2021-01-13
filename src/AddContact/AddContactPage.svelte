@@ -1,26 +1,53 @@
 <script>
-  import ContactListPage from "../../ContactList/ContactListPage.svelte";
-  import { deleteContact, updateContact } from "../../services/contactService";
   import { push } from "svelte-spa-router";
+  import { createContact } from "../services/contactService";
+  let contact = {};
 
-  export let contact;
-
-  const saveContact = () => {
-    updateContact(contact).then(() => {
-      push(`/profile/${contact.id}`);
-    });
-  };
-
-  const onDeleteContact = () => {
-    deleteContact(contact.id).then(() => {
+  const onCreateContact = () => {
+    createContact(contact).then(() => {
       push("/");
     });
   };
 </script>
 
 <style>
+  a {
+    text-decoration: none;
+  }
+
+  .hero {
+    color: white;
+    background: linear-gradient(
+      90deg,
+      rgba(111, 177, 127, 1) 0%,
+      rgba(154, 173, 89, 1) 100%
+    );
+    padding: 2em 0;
+  }
+
+  .back-btn {
+    color: #fff;
+    font-size: 1.7em;
+    padding-left: 1em;
+  }
+
   .contact-info {
     padding: 1.5em;
+  }
+
+  .hero-info {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .relationship-hero {
+    width: 5em;
+    text-align: center;
+    padding: 0.4em 0.5em;
+    border-radius: 100px;
+    border-top-left-radius: 0;
+    margin: 0;
   }
 
   .info-line {
@@ -32,6 +59,11 @@
     margin-top: 2em;
     border-radius: 20px;
     box-shadow: inset 6px 6px 12px #2d2f33, inset -6px -6px 12px #35393d;
+  }
+
+  p {
+    margin: 0;
+    padding-left: 2em;
   }
 
   .icon-gradient {
@@ -86,6 +118,16 @@
   }
 </style>
 
+<header class="hero">
+  <a href="contact-profile.html">
+    <i class="fas fa-chevron-circle-left back-btn" />
+  </a>
+
+  <div class="hero-info">
+    <h1 class="name">Add a Contact</h1>
+  </div>
+</header>
+
 <section class="contact-info">
   <div class="info-line">
     <i class="fas fa-phone icon-gradient" />
@@ -94,6 +136,7 @@
       type="text"
       class="type"
       name="fullname"
+      required
       placeholder="Full Name" />
   </div>
 
@@ -103,6 +146,7 @@
       bind:value={contact.relationship}
       type="text"
       class="type"
+      required
       name="relationship"
       placeholder="Relationship" />
   </div>
@@ -113,6 +157,7 @@
       bind:value={contact.phone_number}
       type="text"
       class="type"
+      required
       name="phone-number"
       placeholder="Phone Number" />
   </div>
@@ -124,6 +169,7 @@
       type="text"
       class="type"
       name="e-mail"
+      required
       placeholder="Email" />
   </div>
 
@@ -134,6 +180,7 @@
       type="text"
       class="type"
       name="address"
+      required
       placeholder="Address" />
   </div>
 </section>
@@ -141,13 +188,6 @@
 <section class="button-container">
   <div class="update-contact">
     <i class="fas fa-check-circle icon-gradient" />
-    <button on:click={saveContact} class="button">Save Contact</button>
-  </div>
-</section>
-
-<section class="button-container">
-  <div class="update-contact">
-    <i class="fas fa-trash icon-gradient" />
-    <button on:click={onDeleteContact} class="button">Delete Contact</button>
+    <button on:click={onCreateContact} class="button">Create Contact</button>
   </div>
 </section>

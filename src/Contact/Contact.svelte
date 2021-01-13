@@ -70,7 +70,7 @@
   </div>
 </section>
 
-<a href={`/profile/${contact.id}/edit`} use:link>
+<a href={`/contacts/${contact.id}/edit`} use:link>
   <section class="edit-contact">
     <div class="edit-button"><i class="fas fa-cog icon-gradient" /></div>
   </section>

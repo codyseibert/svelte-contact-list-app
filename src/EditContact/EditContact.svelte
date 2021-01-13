@@ -1,23 +1,21 @@
 <script>
-  import { push } from "svelte-spa-router";
-  import { createContact } from "../../services/contactService";
+  import { push, link } from "svelte-spa-router";
+  import { saveContact } from "../services/contactService";
 
-  let contact = {
-    full_name: "",
-    email: "",
-    address: "",
-    relationship: "",
-    phone_number: "",
-  };
+  export let contact;
 
-  const addContact = () => {
-    createContact(contact).then(() => {
-      push("/");
+  const save = () => {
+    saveContact(contact).then(() => {
+      push(`/contacts/${contact.id}`);
     });
   };
 </script>
 
 <style>
+  a {
+    text-decoration: none;
+  }
+
   .contact-info {
     padding: 1.5em;
   }
@@ -140,6 +138,15 @@
 <section class="button-container">
   <div class="update-contact">
     <i class="fas fa-check-circle icon-gradient" />
-    <button on:click={addContact} class="button">Add Contact</button>
+    <button on:click={save} class="button">Save Contact</button>
   </div>
+</section>
+
+<section class="button-container">
+  <a href={`/contacts/${contact.id}/delete`} use:link>
+    <div class="update-contact">
+      <i class="fas fa-trash icon-gradient" />
+      <button class="button">Delete Contact</button>
+    </div>
+  </a>
 </section>

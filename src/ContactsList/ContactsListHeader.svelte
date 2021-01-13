@@ -2,17 +2,21 @@
   import { createEventDispatcher } from "svelte";
   import { link } from "svelte-spa-router";
 
-  export const dispatch = createEventDispatcher();
+  let search = "";
 
-  let name = "";
+  const dispatch = createEventDispatcher();
 
-  const search = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-    dispatch("search", name);
+    dispatch("search", search);
   };
 </script>
 
 <style>
+  a {
+    text-decoration: none;
+  }
+
   .header {
     display: flex;
     justify-content: space-evenly;
@@ -26,16 +30,6 @@
     align-items: center;
   }
 
-  input {
-    border-radius: 10px;
-    color: gray;
-  }
-
-  .add {
-    color: #fff;
-    font-size: 1.5em;
-  }
-
   .contact-search {
     font-size: 1.2em;
     padding: 0.3em 0.3em;
@@ -43,17 +37,27 @@
     border: 1px solid white;
     outline: none;
   }
+
+  .add {
+    color: #fff;
+    font-size: 1.5em;
+  }
+
+  i {
+    color: #fff;
+    font-size: 1.5em;
+  }
 </style>
 
 <header class="header">
-  <form class="search-bar" on:submit={search}>
+  <form on:submit={submit} class="search-bar">
     <input
-      bind:value={name}
+      bind:value={search}
       type="search-name"
       class="contact-search"
       name="search-area"
       placeholder="Search" />
   </form>
 
-  <a href="/profile/add" use:link><i class="fas fa-plus-circle add" /></a>
+  <a href="/add-contact" use:link><i class="fas fa-plus-circle add" /></a>
 </header>

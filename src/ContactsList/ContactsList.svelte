@@ -1,11 +1,16 @@
-<script async>
+<script>
   import { link } from "svelte-spa-router";
+
   export let contacts;
 </script>
 
 <style>
   a {
     text-decoration: none;
+  }
+
+  .contacts-library {
+    background: #313438;
   }
 
   i {
@@ -57,20 +62,16 @@
   .text {
     padding-left: 1em;
   }
-
-  .contacts-library {
-    background: #313438;
-  }
 </style>
 
 <section class="contacts-library">
   <ul class="contacts-list">
     {#each contacts as contact}
-      <a href={`/profile/${contact.id}`} use:link>
+      <a href={`/contacts/${contact.id}`} use:link>
         <div class="contact-section">
           <li class="list__item">
             <p class="contact-name">{contact.full_name}</p>
-            <p class="relationship">Friend</p>
+            <p class="relationship">{contact.relationship}</p>
           </li>
 
           <li class="list__item">
